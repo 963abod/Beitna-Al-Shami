@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-dark: #0f0b08;
+    --bg-card: #18120e;
+    --terracotta: #c85a32;
+    --terracotta-hover: #b04b26;
+    --gold: #d4af37;
+    --gold-light: #f3e5ab;
+    --gold-dark: #aa820a;
+    --ivory: #f9f6f0;
+    --charcoal: #1f1814;
+    --border-gold: rgba(212, 175, 55, 0.25);
+  }
+
+  body {
+    background-color: var(--bg-dark);
+    color: var(--ivory);
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0b08;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2119;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
+
+/* Arabesque subtle pattern background */
+.bg-arabesque {
+  background-color: #0f0b08;
+  background-image: radial-gradient(rgba(212, 175, 55, 0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.bg-arabesque-card {
+  background-color: rgba(24, 18, 14, 0.85);
+  background-image: radial-gradient(rgba(200, 90, 50, 0.08) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* Custom Glassmorphism */
+.glass-nav {
+  background: rgba(15, 11, 8, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.glass-card {
+  background: rgba(24, 18, 14, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-badge {
+  background: rgba(212, 175, 55, 0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* Gold Text Gradient */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #aa820a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-terracotta-gradient {
+  background: linear-gradient(135deg, #e07a5f 0%, #c85a32 50%, #9e3f1b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-glow {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.gold-glow-hover:hover {
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
+}
