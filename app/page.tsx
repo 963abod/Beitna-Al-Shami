@@ -7,7 +7,6 @@ import { HeroSection } from '@/components/restaurant/HeroSection';
 import { StorySection } from '@/components/restaurant/StorySection';
 import { MenuSection } from '@/components/restaurant/MenuSection';
 import { ReservationSection } from '@/components/restaurant/ReservationSection';
-import { AdminSection } from '@/components/restaurant/AdminSection';
 import { ContactFooterSection } from '@/components/restaurant/ContactFooterSection';
 
 export default function Home() {
@@ -19,7 +18,6 @@ export default function Home() {
         <StorySection />
         <MenuSection />
         <ReservationSection />
-        <AdminSection />
         <ContactFooterSection />
       </main>
     </StoreProvider>

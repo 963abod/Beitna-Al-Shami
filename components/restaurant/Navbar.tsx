@@ -10,8 +10,7 @@ import {
   X,
   Home,
   BookOpen,
-  PhoneCall,
-  ShieldCheck
+  PhoneCall
 } from 'lucide-react';
 
 export const Navbar = () => {
@@ -36,8 +35,7 @@ export const Navbar = () => {
     { label: dict.nav.story, href: '#story' },
     { label: dict.nav.menu, href: '#menu' },
     { label: dict.nav.reservations, href: '#reservations' },
-    { label: dict.nav.contact, href: '#contact' },
-    { label: dict.nav.admin, href: '#admin' }
+    { label: dict.nav.contact, href: '#contact' }
   ];
 
   const toggleLanguage = () => {
@@ -166,10 +164,6 @@ export const Navbar = () => {
         <a href="#contact" className="flex flex-col items-center text-stone-300 hover:text-[var(--gold)] text-[10px] gap-1">
           <PhoneCall className="w-5 h-5" />
           <span>{dict.nav.contact}</span>
-        </a>
-        <a href="#admin" className="flex flex-col items-center text-stone-300 hover:text-[var(--gold)] text-[10px] gap-1">
-          <ShieldCheck className="w-5 h-5" />
-          <span>{dict.nav.admin}</span>
         </a>
       </nav>
     </>
