@@ -10,13 +10,15 @@ import {
   X,
   Home,
   BookOpen,
-  PhoneCall
+  PhoneCall,
+  Sparkles
 } from 'lucide-react';
 
 export const Navbar = () => {
   const { language, setLanguage, dict } = useStore();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<'home' | 'menu' | 'reservations' | 'contact'>('home');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,6 +32,37 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // IntersectionObserver for Live ScrollSpy
+  useEffect(() => {
+    const sectionIds: ('home' | 'menu' | 'reservations' | 'contact')[] = ['home', 'menu', 'reservations', 'contact'];
+
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id as 'home' | 'menu' | 'reservations' | 'contact';
+          if (sectionIds.includes(id)) {
+            setActiveSection(id);
+          }
+        }
+      });
+    };
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-30% 0px -50% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const navLinks = [
     { label: dict.nav.home, href: '#home' },
     { label: dict.nav.story, href: '#story' },
@@ -40,6 +73,24 @@ export const Navbar = () => {
 
   const toggleLanguage = () => {
     setLanguage(language === 'ar' ? 'en' : 'ar');
+  };
+
+  const tabs = [
+    { id: 'home', label: dict.nav.home, icon: Home, href: '#home' },
+    { id: 'menu', label: dict.nav.menu, icon: BookOpen, href: '#menu' },
+    { id: 'reservations', label: dict.nav.bookTable, icon: Sparkles, href: '#reservations' },
+    { id: 'contact', label: dict.nav.contact, icon: PhoneCall, href: '#contact' }
+  ];
+
+  const activeIndex = tabs.findIndex((t) => t.id === activeSection);
+  const currentActiveIndex = activeIndex >= 0 ? activeIndex : 0;
+
+  const handleTabClick = (id: 'home' | 'menu' | 'reservations' | 'contact', href: string) => {
+    setActiveSection(id);
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -145,26 +196,73 @@ export const Navbar = () => {
         )}
       </header>
 
-      {/* Mobile Fixed Bottom Navigation Bar (Applike UI) */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 glass-nav border-t border-[var(--gold)]/20 py-2.5 px-4 flex justify-around items-center bg-[var(--bg-dark)]/95">
-        <a href="#home" className="flex flex-col items-center text-stone-300 hover:text-[var(--gold)] text-[10px] gap-1">
-          <Home className="w-5 h-5" />
-          <span>{dict.nav.home}</span>
-        </a>
-        <a href="#menu" className="flex flex-col items-center text-stone-300 hover:text-[var(--gold)] text-[10px] gap-1">
-          <BookOpen className="w-5 h-5" />
-          <span>{dict.nav.menu}</span>
-        </a>
-        <a href="#reservations" className="flex flex-col items-center text-[var(--gold)] text-[10px] font-bold gap-1 relative">
-          <div className="p-2 rounded-full bg-[var(--terracotta)] text-white -mt-5 shadow-lg border border-orange-400/30">
-            <Calendar className="w-5 h-5" />
+      {/* Luxury "Magic Curved Cutout" Mobile Bottom Navigation Bar */}
+      <nav
+        aria-label="Mobile Navigation"
+        className="lg:hidden fixed bottom-0 inset-x-0 z-50 flex justify-center pb-3 pt-2 bg-transparent pointer-events-none"
+      >
+        <div className="max-w-md w-[92%] h-[70px] bg-[#16120e] rounded-2xl relative border-t border-amber-900/30 backdrop-blur-md shadow-2xl flex items-center justify-around px-2 pointer-events-auto overflow-visible">
+
+          {/* Magic Curved Sliding Cutout Circle Indicator */}
+          <div
+            className="absolute top-0 w-1/4 h-full flex items-start justify-center transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] pointer-events-none"
+            style={{
+              transform:
+                language === 'ar'
+                  ? `translateX(${-(currentActiveIndex * 100)}%)`
+                  : `translateX(${currentActiveIndex * 100}%)`,
+              left: language === 'ar' ? 'auto' : '0%',
+              right: language === 'ar' ? '0%' : 'auto'
+            }}
+          >
+            {/* SVG Inverted Curved Scoop Dip in Top Border */}
+            <div className="absolute -top-6 w-20 h-8 flex justify-center overflow-visible">
+              <svg className="w-20 h-8 text-[#16120e] fill-current" viewBox="0 0 80 32">
+                <path d="M 0,0 C 22,0 22,32 40,32 C 58,32 58,0 80,0 L 80,32 L 0,32 Z" />
+              </svg>
+            </div>
+
+            {/* Glowing Golden Circle Badge */}
+            <div className="absolute -top-6 w-13 h-13 rounded-full bg-gradient-to-tr from-amber-600 via-amber-500 to-amber-300 border-2 border-amber-300/50 shadow-lg shadow-amber-500/40 flex items-center justify-center transition-all duration-500" />
           </div>
-          <span>{dict.nav.bookTable}</span>
-        </a>
-        <a href="#contact" className="flex flex-col items-center text-stone-300 hover:text-[var(--gold)] text-[10px] gap-1">
-          <PhoneCall className="w-5 h-5" />
-          <span>{dict.nav.contact}</span>
-        </a>
+
+          {/* Navigation Items */}
+          {tabs.map((tab, idx) => {
+            const Icon = tab.icon;
+            const isActive = currentActiveIndex === idx;
+
+            return (
+              <button
+                key={tab.id}
+                onClick={() => handleTabClick(tab.id as any, tab.href)}
+                className="flex-1 h-full flex flex-col items-center justify-center relative z-10 cursor-pointer focus:outline-none"
+              >
+                {/* Icon Animated Translation */}
+                <div
+                  className={`transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] flex items-center justify-center ${
+                    isActive
+                      ? '-translate-y-8 text-stone-950 font-bold scale-110 z-20'
+                      : 'translate-y-0 text-amber-200/50 hover:text-amber-200'
+                  }`}
+                >
+                  <Icon className="w-5 h-5" />
+                </div>
+
+                {/* Animated Text Label Reveal */}
+                <span
+                  className={`absolute bottom-2.5 transition-all duration-500 text-[11px] font-bold ${
+                    isActive
+                      ? 'opacity-100 translate-y-0 text-[var(--gold)] font-bold'
+                      : 'opacity-0 translate-y-3 text-transparent pointer-events-none'
+                  }`}
+                >
+                  {tab.label}
+                </span>
+              </button>
+            );
+          })}
+
+        </div>
       </nav>
     </>
   );

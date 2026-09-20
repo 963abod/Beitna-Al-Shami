@@ -44,6 +44,17 @@ export const ContactFooterSection = () => {
 
   return (
     <>
+      {/* Floating WhatsApp Quick-Chat Action Button */}
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="WhatsApp Chat"
+        className="fixed bottom-24 right-4 sm:bottom-8 sm:right-8 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-2xl flex items-center justify-center transition-all hover:scale-110 border border-emerald-400/40 cursor-pointer"
+      >
+        <MessageSquare className="w-6 h-6" />
+      </a>
+
       {/* Contact & Inquiries Section */}
       <section id="contact" className="py-24 bg-arabesque relative border-t border-[var(--gold)]/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -219,7 +230,7 @@ export const ContactFooterSection = () => {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-black text-stone-300 border-t border-[var(--gold)]/20 pt-16 pb-24 lg:pb-12">
+      <footer className="bg-black text-stone-300 border-t border-[var(--gold)]/20 pt-16 pb-28 lg:pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-stone-800">
